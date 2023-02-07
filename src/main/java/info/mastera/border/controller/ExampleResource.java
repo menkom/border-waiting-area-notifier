@@ -1,4 +1,4 @@
-package info.mastera;
+package info.mastera.border.controller;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

@@ -13,6 +13,8 @@ dependencies {
     implementation 'io.quarkus:quarkus-resteasy-jackson' //for the JAX-RS endpoint
     implementation 'io.quarkus:quarkus-arc' //for dependency injection
     implementation 'io.quarkus:quarkus-resteasy'
+    implementation 'io.quarkus:quarkus-rest-client'
+    implementation 'io.quarkus:quarkus-rest-client-jackson'
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'
 }
