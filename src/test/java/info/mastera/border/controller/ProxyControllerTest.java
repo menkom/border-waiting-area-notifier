@@ -1,16 +1,20 @@
 package info.mastera.border.controller;
 
 import info.mastera.border.declarant.client.DeclarantApi;
+import info.mastera.border.declarant.client.model.CheckpointsResponse;
+import info.mastera.border.declarant.client.model.StateResponse;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import io.restassured.RestAssured;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.hamcrest.CoreMatchers;
 import org.jboss.resteasy.client.exception.ResteasyWebApplicationException;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import javax.ws.rs.WebApplicationException;
+import java.util.ArrayList;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -21,29 +25,93 @@ class ProxyControllerTest {
     @RestClient
     DeclarantApi declarantApi;
 
-    @Test
-    void getCheckpointsTest() {
-        Mockito.doReturn("")
-                .when(declarantApi).getCheckpoints(any());
+    @Nested
+    public class GetCheckpoints {
 
-        RestAssured.given()
-                .when()
-                .get("/declarants")
-                .then()
-                .statusCode(200)
-                .body(CoreMatchers.is(""));
+        @Test
+        void getCheckpointsTest() {
+            var response = new CheckpointsResponse();
+            response.result = new ArrayList<>();
+            Mockito.doReturn(response)
+                    .when(declarantApi).getCheckpoints(any());
+
+            RestAssured.given()
+                    .when()
+                    .get("/declarants/checkpoints")
+                    .then()
+                    .statusCode(200)
+                    .body(CoreMatchers.is("{\"result\":[]}"));
+        }
+
+        @Test
+        void getCheckpointsNullTest() {
+            Mockito.doReturn(null)
+                    .when(declarantApi).getCheckpoints(any());
+
+            RestAssured.given()
+                    .when()
+                    .get("/declarants/checkpoints")
+                    .then()
+                    .statusCode(200)
+                    .body(CoreMatchers.is(""));
+        }
+
+        @Test
+        void getCheckpointsExceptionTest() {
+            Mockito.doThrow(new ResteasyWebApplicationException(new WebApplicationException()))
+                    .when(declarantApi).getCheckpoints(any());
+
+            RestAssured.given()
+                    .when()
+                    .get("/declarants/checkpoints")
+                    .then()
+                    .statusCode(500)
+                    .body(CoreMatchers.is(""));
+        }
     }
 
-    @Test
-    void getCheckpointsExceptionTest() {
-        Mockito.doThrow(new ResteasyWebApplicationException(new WebApplicationException()))
-                .when(declarantApi).getCheckpoints(any());
+    @Nested
+    public class GetState {
 
-        RestAssured.given()
-                .when()
-                .get("/declarants")
-                .then()
-                .statusCode(500)
-                .body(CoreMatchers.is(""));
+        @Test
+        void getStateTest() {
+            var response = new StateResponse();
+            response.info = new StateResponse.Info();
+            Mockito.doReturn(response)
+                    .when(declarantApi).getState(any(), any());
+
+            RestAssured.given()
+                    .when()
+                    .get("/declarants/state")
+                    .then()
+                    .statusCode(200)
+                    .body(CoreMatchers.is("{\"info\":{}}"));
+        }
+
+        @Test
+        void getStateNullTest() {
+            Mockito.doReturn(null)
+                    .when(declarantApi).getState(any(), any());
+
+            RestAssured.given()
+                    .when()
+                    .get("/declarants/state")
+                    .then()
+                    .statusCode(200)
+                    .body(CoreMatchers.is(""));
+        }
+
+        @Test
+        void getStateExceptionTest() {
+            Mockito.doThrow(new ResteasyWebApplicationException(new WebApplicationException()))
+                    .when(declarantApi).getState(any(), any());
+
+            RestAssured.given()
+                    .when()
+                    .get("/declarants/state")
+                    .then()
+                    .statusCode(500)
+                    .body(CoreMatchers.is(""));
+        }
     }
 }

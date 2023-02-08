@@ -19,11 +19,25 @@ public class ProxyController {
     DeclarantApi declarantApi;
 
     @GET
+    @Path("/checkpoints")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCheckpoints() {
         try {
             return Response
                     .ok(declarantApi.getCheckpoints(DeclarantApi.CONSTANT_DECLARANT_TOKEN))
+                    .build();
+        } catch (ResteasyWebApplicationException e) {
+            return e.unwrap().getResponse();
+        }
+    }
+
+    @GET
+    @Path("/state")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getState() {
+        try {
+            return Response
+                    .ok(declarantApi.getState(DeclarantApi.CONSTANT_BERESTOVICA_ID, DeclarantApi.CONSTANT_DECLARANT_TOKEN))
                     .build();
         } catch (ResteasyWebApplicationException e) {
             return e.unwrap().getResponse();
