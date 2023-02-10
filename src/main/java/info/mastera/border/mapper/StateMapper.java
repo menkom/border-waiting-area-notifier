@@ -13,20 +13,20 @@ import java.util.stream.Stream;
 public class StateMapper {
 
     public State convert(StateResponse.Transport transport) {
-        return new State(transport.orderId, Status.parse(transport.status),
-                transport.registrationDate, transport.changedDate);
+        return new State(transport.getOrderId(), Status.parse(transport.getStatus()),
+                transport.getRegistrationDate(), transport.getChangedDate());
     }
 
     public Map<String, State> convert(StateResponse response) {
         return Stream.of(
-                        response.truckLiveQueue.stream(),
-                        response.truckPriority.stream(),
-                        response.busLiveQueue.stream(),
-                        response.busPriority.stream(),
-                        response.carLiveQueue.stream(),
-                        response.motorcycleLiveQueue.stream()
+                        response.getTruckLiveQueue().stream(),
+                        response.getTruckPriority().stream(),
+                        response.getBusLiveQueue().stream(),
+                        response.getBusPriority().stream(),
+                        response.getCarLiveQueue().stream(),
+                        response.getMotorcycleLiveQueue().stream()
                 )
                 .flatMap(i -> i)
-                .collect(Collectors.toMap(transport -> transport.regNum, this::convert));
+                .collect(Collectors.toMap(StateResponse.Transport::getRegNum, this::convert));
     }
 }

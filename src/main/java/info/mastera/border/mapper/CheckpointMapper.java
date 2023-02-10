@@ -10,11 +10,11 @@ import java.util.List;
 public class CheckpointMapper {
 
     public Checkpoint convert(CheckpointsResponse.Checkpoint checkpoint) {
-        return new Checkpoint(checkpoint.id, checkpoint.name);
+        return new Checkpoint(checkpoint.getId(), checkpoint.getName());
     }
 
     public List<Checkpoint> convert(CheckpointsResponse checkpoints) {
-        return checkpoints.result.stream()
+        return checkpoints.getResult().stream()
                 .map(this::convert)
                 .toList();
     }
