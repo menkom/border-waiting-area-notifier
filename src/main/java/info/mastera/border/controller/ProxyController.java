@@ -14,9 +14,12 @@ import javax.ws.rs.core.Response;
 @Path("/declarants")
 public class ProxyController {
 
+    private final DeclarantApi declarantApi;
+
     @Inject
-    @RestClient
-    DeclarantApi declarantApi;
+    public ProxyController(@RestClient DeclarantApi declarantApi) {
+        this.declarantApi = declarantApi;
+    }
 
     @GET
     @Path("/checkpoints")

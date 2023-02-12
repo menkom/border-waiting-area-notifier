@@ -29,8 +29,7 @@ public class ChangeInspectorService {
             StateChangeType changeType = StateChangeType.NONE;
             if (actualState.orderId() != null && !Objects.equals(previousState.orderId(), actualState.orderId())) {
                 changeType = StateChangeType.ORDER_ID;
-            }
-            if (!Objects.equals(previousState.status(), actualState.status())) {
+            } else if (!Objects.equals(previousState.status(), actualState.status())) {
                 changeType = StateChangeType.STATUS;
             }
             return new ChangedState(regNum, changeType,

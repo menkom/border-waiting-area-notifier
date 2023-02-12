@@ -12,8 +12,12 @@ import javax.ws.rs.core.Response;
 @Path("/checkpoints")
 public class CheckpointController {
 
+    private final CheckpointsStorageService checkpointsStorageService;
+
     @Inject
-    CheckpointsStorageService checkpointsStorageService;
+    public CheckpointController(CheckpointsStorageService checkpointsStorageService) {
+        this.checkpointsStorageService = checkpointsStorageService;
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

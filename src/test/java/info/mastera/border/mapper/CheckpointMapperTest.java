@@ -22,8 +22,8 @@ public class CheckpointMapperTest {
     @Test
     public void singleCheckpointConvertTest() {
         var checkpoint = new CheckpointsResponse.Checkpoint();
-        checkpoint.id = "checkpoint_id";
-        checkpoint.name = "checkpoint_name";
+        checkpoint.setId("checkpoint_id");
+        checkpoint.setName("checkpoint_name");
 
         var resultToTest = checkpointMapper.convert(checkpoint);
 
@@ -35,7 +35,7 @@ public class CheckpointMapperTest {
     @Test
     public void responseOfCheckpointsConvertTest() {
         var response = new CheckpointsResponse();
-        response.result = List.of(new CheckpointsResponse.Checkpoint());
+        response.setResult(List.of(new CheckpointsResponse.Checkpoint()));
         Mockito.doReturn(new Checkpoint("", ""))
                 .when(checkpointMapper)
                 .convert(ArgumentMatchers.any(CheckpointsResponse.Checkpoint.class));

@@ -31,7 +31,7 @@ class ProxyControllerTest {
         @Test
         void getCheckpointsTest() {
             var response = new CheckpointsResponse();
-            response.result = new ArrayList<>();
+            response.setResult(new ArrayList<>());
             Mockito.doReturn(response)
                     .when(declarantApi).getCheckpoints(any());
 
@@ -76,7 +76,6 @@ class ProxyControllerTest {
         @Test
         void getStateTest() {
             var response = new StateResponse();
-            response.info = new StateResponse.Info();
             Mockito.doReturn(response)
                     .when(declarantApi).getState(any(), any());
 
@@ -85,7 +84,7 @@ class ProxyControllerTest {
                     .get("/declarants/state")
                     .then()
                     .statusCode(200)
-                    .body(CoreMatchers.is("{\"info\":{}}"));
+                    .body(CoreMatchers.is("{}"));
         }
 
         @Test
