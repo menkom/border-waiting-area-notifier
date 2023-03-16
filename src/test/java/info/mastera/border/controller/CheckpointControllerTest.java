@@ -20,7 +20,11 @@ public class CheckpointControllerTest {
 
     @BeforeEach
     protected void init() {
-        Mockito.doReturn(List.of(new Checkpoint("1", "x")))
+        Mockito.doReturn(List.of(
+                new Checkpoint()
+                        .setId("1")
+                        .setName("x")
+                ))
                 .when(checkpointsStorageService)
                 .get();
     }

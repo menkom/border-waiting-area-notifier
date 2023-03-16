@@ -33,8 +33,8 @@ public class SchedulerService {
     @Scheduled(every = "{waiting-area.scheduler.data-collection.state}")
     public void retrieveStateData() {
         for (Checkpoint checkpoint : checkpointsStorageService.get()) {
-            Log.debug(checkpoint.name());
-            var actualStates = declarantApi.getState(checkpoint.id(), DeclarantApi.CONSTANT_DECLARANT_TOKEN);
+            Log.debug(checkpoint.getName());
+            var actualStates = declarantApi.getState(checkpoint.getId(), DeclarantApi.CONSTANT_DECLARANT_TOKEN);
             var states = stateMapper.convert(actualStates);
             states.forEach((key, value) ->
                     notifyService.notify(changeInspectorService.inspect(key, value)));
@@ -45,8 +45,8 @@ public class SchedulerService {
 
     @Scheduled(every = "{waiting-area.scheduler.data-collection.checkpoints-update}")
     public void retrieveCheckpointsData() {
-        var actualCheckpoints = checkpointMapper.convert(declarantApi.getCheckpoints(DeclarantApi.CONSTANT_DECLARANT_TOKEN));
-        checkpointsStorageService.update(actualCheckpoints);
+//        var actualCheckpoints = checkpointMapper.convert(declarantApi.getCheckpoints(DeclarantApi.CONSTANT_DECLARANT_TOKEN));
+//        checkpointsStorageService.update(actualCheckpoints);
         Log.info("Checkpoints updated");
     }
 }

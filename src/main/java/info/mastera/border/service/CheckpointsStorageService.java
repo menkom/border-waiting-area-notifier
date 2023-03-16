@@ -1,21 +1,29 @@
 package info.mastera.border.service;
 
 import info.mastera.border.model.Checkpoint;
+import info.mastera.border.repository.CheckpointRepository;
 
 import javax.enterprise.context.ApplicationScoped;
-import java.util.ArrayList;
+import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
 public class CheckpointsStorageService {
 
-    private List<Checkpoint> checkpoints = new ArrayList<>();
+    private final CheckpointRepository checkpointRepository;
 
-    public List<Checkpoint> get() {
-        return checkpoints.stream().toList();
+    @Inject
+    public CheckpointsStorageService(CheckpointRepository checkpointRepository) {
+        this.checkpointRepository = checkpointRepository;
     }
 
+    public List<Checkpoint> get() {
+        return checkpointRepository.listAll();
+    }
+
+    @Transactional
     public void update(List<Checkpoint> checkpoints) {
-        this.checkpoints = checkpoints;
+        checkpoints.forEach(checkpointRepository::update);
     }
 }

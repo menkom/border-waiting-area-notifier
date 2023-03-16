@@ -5,17 +5,20 @@ import info.mastera.border.model.Checkpoint;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class CheckpointMapper {
 
     public Checkpoint convert(CheckpointsResponse.Checkpoint checkpoint) {
-        return new Checkpoint(checkpoint.getId(), checkpoint.getName());
+        return new Checkpoint()
+                .setId(checkpoint.getId())
+                .setName(checkpoint.getName());
     }
 
     public List<Checkpoint> convert(CheckpointsResponse checkpoints) {
         return checkpoints.getResult().stream()
                 .map(this::convert)
-                .toList();
+                .collect(Collectors.toList());
     }
 }

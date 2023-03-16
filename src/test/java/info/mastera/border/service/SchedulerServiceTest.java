@@ -32,7 +32,11 @@ class SchedulerServiceTest {
 
     @BeforeEach
     protected void init() {
-        checkpoints = List.of(new Checkpoint("id", "name"));
+        checkpoints = List.of(
+                new Checkpoint().
+                setId("id")
+                .setName("name")
+        );
         Mockito.doReturn(checkpoints)
                 .when(checkpointMapper)
                 .convert(ArgumentMatchers.any(CheckpointsResponse.class));

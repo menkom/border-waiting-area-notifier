@@ -28,15 +28,15 @@ public class CheckpointMapperTest {
         var resultToTest = checkpointMapper.convert(checkpoint);
 
         Assertions.assertNotNull(resultToTest);
-        Assertions.assertEquals("checkpoint_id", resultToTest.id());
-        Assertions.assertEquals("checkpoint_name", resultToTest.name());
+        Assertions.assertEquals("checkpoint_id", resultToTest.getId());
+        Assertions.assertEquals("checkpoint_name", resultToTest.getName());
     }
 
     @Test
     public void responseOfCheckpointsConvertTest() {
         var response = new CheckpointsResponse();
         response.setResult(List.of(new CheckpointsResponse.Checkpoint()));
-        Mockito.doReturn(new Checkpoint("", ""))
+        Mockito.doReturn(new Checkpoint())
                 .when(checkpointMapper)
                 .convert(ArgumentMatchers.any(CheckpointsResponse.Checkpoint.class));
 
